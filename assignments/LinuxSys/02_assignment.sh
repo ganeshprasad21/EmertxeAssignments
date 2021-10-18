@@ -1,32 +1,31 @@
 <<comments
 name: Ganesh Prasad R
-date: 17/10/2021
+
+date: 18/10/2021
+
 description: 
 Read 'n' and generate a pattern given below
-Read 'n' and generate a pattern given below
-1
-2 3
-4 5 6
-7 8 9 10
-input : Enter the number : 4
-output: 
-Read 'n' and generate a pattern given below
 1
 2 3
 4 5 6
 7 8 9 10
 
+input : bash 02_assignment.sh
+Enter the number : 4
+
+output: 
+1
+2 3
+4 5 6
+7 8 9 10
 
 comments
-
-
 
 #!/bin/bash
 
 read -p "Enter the number :" num
 
-
-if [ $num -gt 2 -a $num -lt `echo "2 * 2 * 2 * 2 * 2" | bc` ]
+if [ $num -ge 2 -a $num -le `echo "2 * 2 * 2 * 2 * 2" | bc` ]
 then
 displayNum=1
     for row in $(seq 1 $num)
