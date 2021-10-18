@@ -6,8 +6,9 @@ date: 18/10/2021
 description: 
 Write a script for addition of two numbers for real numbers also
 
-input : bash 03_assignment.sh
-Enter the numbers to addition :  10  20
+input : ./03_assignment.sh
+Enter the numbers to addition
+10  20
 
 output: 
 Answer is 30
@@ -26,10 +27,12 @@ function checkIfRealNumber()
     fi 
 }
 
-read -p "Enter the numbers to addition :  " number1 number2
+echo "Enter the numbers to addition"
+read number1 number2
+
 if [ `checkIfRealNumber $number1` = "real" -a `checkIfRealNumber $number2` = "real" ]
 then
-    echo $(echo "$number1 + $number2" | bc)
+    echo "Answer is $(echo "$number1 + $number2" | bc)"
 else
     echo "Error : Please enter only integers or real numbers"
 fi
