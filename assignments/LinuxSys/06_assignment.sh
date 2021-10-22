@@ -1,7 +1,7 @@
 <<comments
 name: Ganesh Prasad R
 
-date: 18/10/2021
+date: 22/10/2021
 
 description: 
 Write a script to print a given number in reverse order
@@ -40,5 +40,5 @@ then
         echo "Error: pass a multi-digit number"
     fi
 else
-    echo "Enter only numbers"
+    echo "Error: Enter only numbers"
 fi

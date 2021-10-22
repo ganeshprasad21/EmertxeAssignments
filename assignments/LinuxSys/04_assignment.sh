@@ -1,7 +1,7 @@
 <<comments
 name: Ganesh Prasad R
 
-date: /10/2021
+date: 22/10/2021
 
 description: 
 Write a script for arithmetic calculator using command line arguments
@@ -9,7 +9,7 @@ Write a script for arithmetic calculator using command line arguments
 input : ./04_calculator.h 25 + 41
 
 output: 
-25 + 41 = 67
+25 + 41 = 66
 
 comments
 
