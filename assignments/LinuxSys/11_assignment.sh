@@ -1,42 +1,33 @@
 <<comments
 name: Ganesh Prasad R
 
-date: 18/10/2021
+date: 26/10/2021
 
 description: 
-Read 'n' and generate a pattern given below
-1
-1 2
-1 2 3
-1 2 3 4
+Write a script to print chess board
 
-input : bash 01_assignment.sh
-Enter the number : 4
+input : ./11_chess_board.sh
 
 output: 
-1
-1 2
-1 2 3
-1 2 3 4
+"a chess board"
 
 comments
 
 #!/bin/bash
 
-read -p "Enter the number :" num
-
-if [ $num -ge 2 -a $num -le `echo "2 * 2 * 2 * 2 * 2" | bc` ]
-then
-    for row in $(seq 1 $num)
+for row in `seq 0 7`
+do
+    for col in `seq 0 7`
     do
-        displayNumber=1
-        for col in $(seq 1 $row)        
-        do
-            echo -n "$displayNumber "
-            ((displayNumber=displayNumber + 1))
-        done
-        echo
+        rowPlusCol=`echo "$row + $col" | bc`
+        if [ ` echo " $rowPlusCol % 2 " | bc ` -eq 0 ]
+        then
+            echo -e -n "\e[47m" " " #white
+        elif [ ` echo " $rowPlusCol % 2 "| bc ` -eq 1 ]
+        then
+            echo -e -n "\e[40m" " " #black
+        fi
     done
-else
-    echo "Error : Number out of range, Please enter 2 < number < 2^5"
-fi
+    echo -e -n "\e[0m" " "
+    echo
+done

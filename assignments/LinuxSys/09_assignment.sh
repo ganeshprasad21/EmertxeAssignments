@@ -1,42 +1,50 @@
 <<comments
 name: Ganesh Prasad R
 
-date: 18/10/2021
+date: 25/10/2021
 
 description: 
-Read 'n' and generate a pattern given below
-1
-1 2
-1 2 3
-1 2 3 4
+Write a script to read 'n' and generate Fibonacci numbers <= n
 
-input : bash 01_assignment.sh
-Enter the number : 4
+input : ./09_fibonacci.sh
+Enter limit for fib series: 10
 
 output: 
-1
-1 2
-1 2 3
-1 2 3 4
+0, 1, 1, 2, 3, 5, 8
 
 comments
 
 #!/bin/bash
 
-read -p "Enter the number :" num
-
-if [ $num -ge 2 -a $num -le `echo "2 * 2 * 2 * 2 * 2" | bc` ]
+read -p "Enter limit for fib series: " lim
+firstFib=0
+secondFib=1
+Fib=0
+if [[ $lim =~ ^[+-]?[0-9]+$ ]]
 then
-    for row in $(seq 1 $num)
-    do
-        displayNumber=1
-        for col in $(seq 1 $row)        
+    if [ $lim -eq 0 ]
+    then
+        echo "0"
+    elif [ $lim -eq 1 ]
+    then
+        echo "0, 1, 1"
+    elif [ $lim -gt 1 ]
+    then
+        echo -n "0, 1, "
+        while [ $lim -ge $Fib ]
         do
-            echo -n "$displayNumber "
-            ((displayNumber=displayNumber + 1))
+                Fib=`echo " $firstFib + $secondFib " | bc`
+                firstFib=$secondFib
+                secondFib=$Fib
+                if [ $lim -ge $Fib ]
+                then
+                    echo -n "$Fib, "
+                fi
         done
-        echo
-    done
+    elif [ $lim -lt 0 ]
+    then
+        echo "Error : Please enter only positive numbers."
+    fi
 else
-    echo "Error : Number out of range, Please enter 2 < number < 2^5"
+    echo "Error : Please enter only numbers."
 fi

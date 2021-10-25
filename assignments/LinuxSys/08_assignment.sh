@@ -1,42 +1,79 @@
 <<comments
 name: Ganesh Prasad R
 
-date: 18/10/2021
+date: 25/10/2021
 
 description: 
-Read 'n' and generate a pattern given below
-1
-1 2
-1 2 3
-1 2 3 4
+Write a script to perform arithmetic operation on digits of a given number depending upon the operator.
 
-input : bash 01_assignment.sh
-Enter the number : 4
+input : ./08_operator_dependent.sh 1234+
 
 output: 
-1
-1 2
-1 2 3
-1 2 3 4
+Sum is 10
 
 comments
 
 #!/bin/bash
 
-read -p "Enter the number :" num
+function arithmaticOperation()
+{
+    case $2 in
 
-if [ $num -ge 2 -a $num -le `echo "2 * 2 * 2 * 2 * 2" | bc` ]
-then
-    for row in $(seq 1 $num)
-    do
-        displayNumber=1
-        for col in $(seq 1 $row)        
+    +)
+        echo "`echo "$1 + $3" | bc`"
+        ;;
+    -)
+        echo "`echo "$1 - $3" | bc`"
+        ;;
+    x)
+        echo "`echo "$1 * $3" | bc`"
+        ;;
+    /)
+        echo "`echo "scale=2;$1 / $3" | bc`"
+        ;;
+    *)
+        echo "invalid or unsupported operator"
+        ;;
+    esac
+    
+}
+
+
+if [ $# -eq 1 ]
+    then
+    num=$1
+    if [[ $num =~ ^[0-9]+[+-/x]$ ]]
+    then
+
+        endIndex=`echo " ${#num} - 2 " | bc`
+        answer=${num[@]:0:1}
+        operation=${num[@]:(( ${#num} - 1 )):1}
+
+        for i in `seq 1 $endIndex`
         do
-            echo -n "$displayNumber "
-            ((displayNumber=displayNumber + 1))
+            numToFunc=${num[@]:$i:1}
+            answer=`arithmaticOperation $answer $operation $numToFunc`
         done
-        echo
-    done
+
+        if [ $operation = "+" ]
+        then
+            echo "Sum is $answer"
+        elif [ $operation = "/" ]
+        then
+            echo "Div is $answer"
+        elif [ $operation = "-" ]
+        then
+            echo "Sub is $answer"
+        elif [ $operation = "x" ]
+        then
+            echo "Mul is $answer"
+        fi
+    else
+        echo "Error: Operator missing or invalid operator, please pass"
+        echo "operator as last digit (+,-,x,/)"
+    fi
 else
-    echo "Error : Number out of range, Please enter 2 < number < 2^5"
+    echo "Error : Please pass the argument."
+    echo "Usage : ./09_operator_dependent.sh 2345+"
 fi
+

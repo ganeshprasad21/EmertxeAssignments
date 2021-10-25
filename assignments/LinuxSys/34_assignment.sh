@@ -35,7 +35,7 @@ function checkIfRealNumber()
 
 function checkValidity()
 {
-    if [ `checkIfRealNumber $1` = "real" -a `echo "$1 > 0" | bc` -eq 1 ]
+    if [ `checkIfRealNumber $1` = "real" -a `echo "$1 >= 0" | bc` -eq 1 ]
     then
         echo "valid"
     else
