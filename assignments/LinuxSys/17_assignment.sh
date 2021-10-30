@@ -24,7 +24,7 @@ then
     then
         if [ -s $3 ] #check if its not empty
         then
-            totalLineInAFile=`wc -l $3 | cut -d ' ' -f1` #to get how many lines the given file hasd
+            totalLineInAFile=`wc -l $3 | cut -d ' ' -f1` #to get how many lines the given file has
             totalLineForHead=`echo "$1 + $2 - 1" | bc` #to get count for head command
             if [ $totalLineInAFile -gt $totalLineForHead ]
             then
