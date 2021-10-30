@@ -39,7 +39,7 @@ then
         echo "File does not exist"
     fi
 else #the cla is not correct
-    echo "Error: arguments missing!"
-    echo "Usage: ./file_filter.sh start_line uptoline filename"
-    echo "For eg. ./20_file_filter.sh 5 5 <file>"
+    echo "Error: arguments missing! or in excess"
+    echo "Usage: ./file_filter.sh start_line upto_line file_name"
+    echo "For eg. ./20_file_filter.sh 5 5 <file_name>"
 fi
