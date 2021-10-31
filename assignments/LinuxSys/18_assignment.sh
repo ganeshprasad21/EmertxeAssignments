@@ -1,42 +1,38 @@
 <<comments
 name: Ganesh Prasad R
 
-date: 18/10/2021
+date: 31/10/2021
 
 description: 
-Read 'n' and generate a pattern given below
-1
-1 2
-1 2 3
-1 2 3 4
+Display the longest and shortest user-names on the system.
 
-input : bash 01_assignment.sh
-Enter the number : 4
+input : ./19_largest_username.sh
+
 
 output: 
-1
-1 2
-1 2 3
-1 2 3 4
+The Longest Name is: speech-dispatcher
+The Shortest Name is: lp
 
 comments
 
 #!/bin/bash
 
-read -p "Enter the number :" num
+allUsernames=(`cat /etc/passwd | cut -d ':' -f1`) #get all usernames
 
-if [ $num -ge 2 -a $num -le `echo "2 * 2 * 2 * 2 * 2" | bc` ]
-then
-    for row in $(seq 1 $num)
-    do
-        displayNumber=1
-        for col in $(seq 1 $row)        
-        do
-            echo -n "$displayNumber "
-            ((displayNumber=displayNumber + 1))
-        done
-        echo
-    done
-else
-    echo "Error : Number out of range, Please enter 2 < number < 2^5"
-fi
+smallestName=${allUsernames[0]} #initialize the smallest and largest before looping and setting correct
+largestName=${allUsernames[0]}
+
+for username in ${allUsernames[@]}    #logic to find largest and smallet  names
+do
+    if [ ${#username} -gt ${#largestName} ]
+    then
+        largestName=$username
+    fi
+    if [ ${#username} -lt ${#smallestName} ]
+    then
+        smallestName=$username
+    fi
+done
+
+echo "The Longest Name is:             $largestName"
+echo "The Shortest Name is:            $smallestName"
