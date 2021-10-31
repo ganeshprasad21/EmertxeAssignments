@@ -1,42 +1,36 @@
 <<comments
 name: Ganesh Prasad R
 
-date: 18/10/2021
+date: 1/11/2021
 
 description: 
-Read 'n' and generate a pattern given below
-1
-1 2
-1 2 3
-1 2 3 4
+Write a script to search a user present in your system.
 
-input : bash 01_assignment.sh
-Enter the number : 4
+input : ./33_user_present.sh xyz 
 
 output: 
-1
-1 2
-1 2 3
-1 2 3 4
+xyz not present
 
 comments
 
 #!/bin/bash
 
-read -p "Enter the number :" num
-
-if [ $num -ge 2 -a $num -le `echo "2 * 2 * 2 * 2 * 2" | bc` ]
+if [ $# -eq 0 ]
 then
-    for row in $(seq 1 $num)
+    echo "Error : Please pass the argument through command line."
+elif [ $# -eq 1 ]
+then
+    userNames=(`cat /etc/passwd | cut -d ':' -f1`) #get array of usernames
+    for userName in ${userNames[@]}
     do
-        displayNumber=1
-        for col in $(seq 1 $row)        
-        do
-            echo -n "$displayNumber "
-            ((displayNumber=displayNumber + 1))
-        done
-        echo
+        if [[ $userName == $1 ]] #if username matches or not
+        then
+            echo "$userName is present"
+            exit #exit after identifying user
+        fi
     done
+    #if the user is not prsent the program will say this
+    echo "$1 not present"
 else
-    echo "Error : Number out of range, Please enter 2 < number < 2^5"
+    echo "not valid argument count ... only 1 argument accepted "
 fi
