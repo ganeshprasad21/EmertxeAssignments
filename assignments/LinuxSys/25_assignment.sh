@@ -1,42 +1,51 @@
 <<comments
 name: Ganesh Prasad R
 
-date: 18/10/2021
+date: 5/11/2021
 
 description: 
-Read 'n' and generate a pattern given below
-1
-1 2
-1 2 3
-1 2 3 4
+Use a recursive function to print each argument passed to the function.
 
-input : bash 01_assignment.sh
-Enter the number : 4
+input : ./25_recursion.sh How are you? I am fine
+
 
 output: 
-1
-1 2
-1 2 3
-1 2 3 4
+How
+are
+you?
+I
+am
+fine
 
 comments
 
 #!/bin/bash
 
-read -p "Enter the number :" num
+printRecursive()
+{
+    argumentArray=("$@") #to save the complete cla in an array
 
-if [ $num -ge 2 -a $num -le `echo "2 * 2 * 2 * 2 * 2" | bc` ]
+    if [ ${#argumentArray} -gt 0 ]
+    then
+        echo "${argumentArray[0]}" #print the 1st arg <where the magic happens>
+
+        lenOfArr=${#argumentArray[@]}                   #get length of clas to find substring for recursive call
+        lenOfArrForRecursiveCall=$(( $lenOfArr - 1 ))
+
+        argumentArrayForRecursiveCall=${argumentArray[@]:1:lenOfArrForRecursiveCall} #get substring for recursive call
+
+        printRecursive ${argumentArrayForRecursiveCall[@]} #recursive call
+
+        #return #it is optional here
+    elif [ ${#argumentArray} -eq 0 ]
+    then
+        return
+    fi
+
+}
+if [ $# -gt 0 ]
 then
-    for row in $(seq 1 $num)
-    do
-        displayNumber=1
-        for col in $(seq 1 $row)        
-        do
-            echo -n "$displayNumber "
-            ((displayNumber=displayNumber + 1))
-        done
-        echo
-    done
+    printRecursive $@
 else
-    echo "Error : Number out of range, Please enter 2 < number < 2^5"
+    echo "Error : Pass the arguments through command line."
 fi
