@@ -23,7 +23,7 @@ indexForLoop=0 #count variable used in loop to access the usage value
 
 for aFileSystemName in ${fileSystemNames[@]}
 do 
-    if [ `echo " 100 - ${usageArray[$indexForLoop]} " | bc ` -lt 10 ] #get free % and comnpare if its less than 10 
+    if [ `echo " 100 - ${usageArray[$indexForLoop]} " | bc ` -gt 10 ] #get free % and comnpare if its less than 10 
     then
         echo "Filesystem $aFileSystemName have less than 10% free space" #display the fs name
     fi

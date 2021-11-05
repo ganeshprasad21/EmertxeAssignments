@@ -4,39 +4,45 @@ name: Ganesh Prasad R
 date: 18/10/2021
 
 description: 
-Read 'n' and generate a pattern given below
-1
-1 2
-1 2 3
-1 2 3 4
+Use pipes or redirection to create an infinite feedback loop.
 
-input : bash 01_assignment.sh
-Enter the number : 4
+input : ./24_redirection.sh
 
 output: 
-1
-1 2
-1 2 3
-1 2 3 4
+Before loop file contents
+Hai hello
+After loop file contents
+Hai hello
+Hai hello
+Hai hello
+Hai hello
+Hai hello
+Hai hello
+Hai hello
+.
+.
+.
 
 comments
 
 #!/bin/bash
-
-read -p "Enter the number :" num
-
-if [ $num -ge 2 -a $num -le `echo "2 * 2 * 2 * 2 * 2" | bc` ]
+if [ $# -eq 1 ]
 then
-    for row in $(seq 1 $num)
-    do
-        displayNumber=1
-        for col in $(seq 1 $row)        
-        do
-            echo -n "$displayNumber "
-            ((displayNumber=displayNumber + 1))
-        done
-        echo
-    done
-else
-    echo "Error : Number out of range, Please enter 2 < number < 2^5"
+    fileName=$1
+    if [ -f $fileName ] #if file exists
+    then
+        if [ -s $fileName ]  #if file is not empty
+        then
+            tail -f $fileName >> $fileName | tail -f $fileName
+        else #if file is empty
+            echo "empty file please put some content before running the script"
+            fi
+    else
+        echo "the given file appears to be inexistent"
+    fi
+elif [ $# -eq 0 ] #0 arguments given
+then
+    echo "please send 1 argument and that argument should be a file name"
+else #more than 1 arguments given
+    echo "invalid number of arguments [:only one supported:]"
 fi
