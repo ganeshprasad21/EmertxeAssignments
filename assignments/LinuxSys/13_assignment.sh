@@ -23,20 +23,8 @@ comments
 
 #!/bin/bash
 
-read -p "Enter the number :" num
-
-if [ $num -ge 2 -a $num -le `echo "2 * 2 * 2 * 2 * 2" | bc` ]
-then
-    for row in $(seq 1 $num)
-    do
-        displayNumber=1
-        for col in $(seq 1 $row)        
-        do
-            echo -n "$displayNumber "
-            ((displayNumber=displayNumber + 1))
-        done
-        echo
-    done
-else
-    echo "Error : Number out of range, Please enter 2 < number < 2^5"
-fi
+#read -p "Enter the number :" num
+numbers=$#-1
+arr=("$@")
+    numbers="${arr[@]:1:numbers}"
+echo ${numbers[@]}
