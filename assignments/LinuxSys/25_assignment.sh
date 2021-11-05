@@ -43,6 +43,7 @@ printRecursive()
     fi
 
 }
+
 if [ $# -gt 0 ]
 then
     printRecursive $@
