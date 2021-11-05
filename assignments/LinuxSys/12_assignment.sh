@@ -16,7 +16,7 @@ comments
 
 #!/bin/bash
 
-ascending() #ascending order bubbler sort
+ascending() #ascending order bubble sort
 {
     numbers=("$@")
     noOfSwappingRounds=$(( $# - 1 ))
@@ -26,7 +26,6 @@ ascending() #ascending order bubbler sort
         echo "Ascending order of array is : ${numbers[*]}"
         return
     else #more than 1 number is given
-        
         totalNoOfLoops=$(( ${#numbers[@]} - 1 )) #get value of total number of while loop count
         numberOfLoopsSoFar=0;                    #initialize number of loops done
         while [ $totalNoOfLoops -gt $numberOfLoopsSoFar ] #repeat loop until we swap every adjacent numbersaccurately
@@ -58,7 +57,6 @@ descending() #descending order bubble sort
         echo "Descending order of array is : ${numbers[*]}"
         return
     else #more than 1 number is given
-        
         totalNoOfLoops=$(( ${#numbers[@]} - 1 )) #get value of total number of while loop count
         numberOfLoopsSoFar=0;                    #initialize number of loops done
         while [ $totalNoOfLoops -gt $numberOfLoopsSoFar ] #repeat loop until we swap every adjacent numbersaccurately
@@ -83,7 +81,7 @@ descending() #descending order bubble sort
 
 if [ $# -ge 2 ] #min reqirement to be valid criteria anything lesser than this is error
 then
-    if [[ $1 =~ ^-[ad]{1}$ ]]        #      starts with valid command
+    if [[ $1 =~ ^-[ad]{1}$ ]]        #cla starts with valid command
     then
         numbers=("$@")      #consider whole as numbers will update in future
         lenOfNumbers=$(( $# - 1 ))      #get total count of numbers which is 1 less than total cla

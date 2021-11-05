@@ -1,42 +1,42 @@
 <<comments
 name: Ganesh Prasad R
 
-date: 18/10/2021
+date: 5/11/2021
 
 description: 
-Read 'n' and generate a pattern given below
-1
-1 2
-1 2 3
-1 2 3 4
+Given album name and corresponding directory this scripts renames them
+properly by inserting index numbers. For example given file numbers .
 
-input : bash 01_assignment.sh
-Enter the number : 4
+input : 16_rename_album.sh day_out
 
 output: 
-1
-1 2
-1 2 3
-1 2 3 4
+day_out001.jpg day_out002.jpgday_out003.jpg
 
 comments
 
 #!/bin/bash
 
-read -p "Enter the number :" num
 
-if [ $num -ge 2 -a $num -le `echo "2 * 2 * 2 * 2 * 2" | bc` ]
+if [ $# -eq 1 ] #valid case
 then
-    for row in $(seq 1 $num)
-    do
-        displayNumber=1
-        for col in $(seq 1 $row)        
-        do
-            echo -n "$displayNumber "
-            ((displayNumber=displayNumber + 1))
-        done
-        echo
-    done
-else
-    echo "Error : Number out of range, Please enter 2 < number < 2^5"
+    echo "All matching .jpg files in current directory is renamed as"
+    for fileName in * #loop for every filename
+    do    
+        if [ -f $fileName ]
+        then
+            if [[ $fileName =~ ^DSN[0-9]{3}.jpg$ ]] #checks for the kind of files we are wanting to alter = dsr-"3 numbers".jpg
+            then
+                alteredFileName=$1
+                alteredFileName+=`echo "$fileName" | sed 's/DSN//1'` #altration
+                mv $fileName $alteredFileName #rename
+                echo -n "$alteredFileName   "
+            fi
+        fi
+    done 
+    echo
+elif [ $# -eq 0 ] #0 cla sent
+then
+    echo "Error : Please pass the prefix name through command line."
+else #more than 1
+    echo "please send only one cla which represents the prefix"
 fi
