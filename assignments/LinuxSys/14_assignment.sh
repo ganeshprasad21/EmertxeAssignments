@@ -1,42 +1,45 @@
 <<comments
 name: Ganesh Prasad R
 
-date: 18/10/2021
+date: 6/11/2021
 
 description: 
-Read 'n' and generate a pattern given below
-1
-1 2
-1 2 3
-1 2 3 4
+Write a script to rename a file/directory replaced by lower/upper case letters.
 
-input : bash 01_assignment.sh
-Enter the number : 4
+input : 
 
 output: 
-1
-1 2
-1 2 3
-1 2 3 4
+Files are rename in lowercase and directories are renamed in upper case
 
 comments
 
 #!/bin/bash
 
-read -p "Enter the number :" num
 
-if [ $num -ge 2 -a $num -le `echo "2 * 2 * 2 * 2 * 2" | bc` ]
+if [ $# -eq 1 ] #valid number of arguments
 then
-    for row in $(seq 1 $num)
-    do
-        displayNumber=1
-        for col in $(seq 1 $row)        
+    if [ -d $1 ]                                #if its a valid directory (path)
+    then
+
+        cd $1                                   #jump to the path
+        echo "Files are rename in lowercase and directories are renamed in upper case"
+
+        for fileOrDirectory in *
         do
-            echo -n "$displayNumber "
-            ((displayNumber=displayNumber + 1))
+            if [ -f $fileOrDirectory ] #if its file
+            then
+                newname=`echo $fileOrDirectory | tr [:upper:] [:lower:]`
+                mv $fileOrDirectory $newname  #rename files into lower case
+            elif [ -d $fileOrDirectory ] #if its directory
+            then
+                newname=`echo $fileOrDirectory | tr [:lower:] [:upper:]`
+                mv $fileOrDirectory $newname #rename directories into upper case
+            fi 
         done
-        echo
-    done
-else
-    echo "Error : Number out of range, Please enter 2 < number < 2^5"
+    else #invalid directory path specified
+        echo "enter a valid dir path"
+    fi
+
+else #0 or more than 1 arguments passed
+    echo "please give 1 cla and that should be valid directory path... "
 fi
