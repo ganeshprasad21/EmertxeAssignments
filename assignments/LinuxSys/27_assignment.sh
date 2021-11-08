@@ -1,42 +1,41 @@
+	
 <<comments
 name: Ganesh Prasad R
 
-date: 18/10/2021
+date: 6/11/2021
 
 description: 
-Read 'n' and generate a pattern given below
-1
-1 2
-1 2 3
-1 2 3 4
+Write a script that takes any number of directories as command-line arguments
+and then lists the contents of each of these directories.
 
-input : bash 01_assignment.sh
-Enter the number : 4
+input : 
+./27_ouput_ls.sh ~ ~/ECEP 
 
 output: 
-1
-1 2
-1 2 3
-1 2 3 4
+/home/user:
+Downloads Documents Desktop Music Pictures Public Videos
+ECEP
+/home/user/ECEP:
+Linux_Systems Advnc_C Linux_Internals Data_Structures MC
 
 comments
 
 #!/bin/bash
 
-read -p "Enter the number :" num
-
-if [ $num -ge 2 -a $num -le `echo "2 * 2 * 2 * 2 * 2" | bc` ]
+if [ $# -eq 0 ]
 then
-    for row in $(seq 1 $num)
-    do
-        displayNumber=1
-        for col in $(seq 1 $row)        
-        do
-            echo -n "$displayNumber "
-            ((displayNumber=displayNumber + 1))
-        done
-        echo
-    done
+    echo "$PWD :"
+    echo * #print current directory contents
 else
-    echo "Error : Number out of range, Please enter 2 < number < 2^5"
+    for dirName in $@
+    do
+        if [ -d $dirName ]
+        then
+            cd $dirName
+            echo "$PWD :"
+            echo * #print current directory contents
+        else
+            echo "Cannot access '$dirName' : No such a file or directory. "
+        fi
+    done
 fi

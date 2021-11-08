@@ -1,42 +1,48 @@
 <<comments
 name: Ganesh Prasad R
 
-date: 18/10/2021
+date: 8/11/2021
 
 description: 
-Read 'n' and generate a pattern given below
-1
-1 2
-1 2 3
-1 2 3 4
+Write a script to locks down file permissions for a particular directory
 
-input : bash 01_assignment.sh
-Enter the number : 4
+input : ./28_lock_permissions.sh Dir/
 
 output: 
-1
-1 2
-1 2 3
-1 2 3 4
+Before locking
+total 0
+-rw-rw-r-- 1 biju biju 0 Jun 8 12:37 D2file1
+-rw-rw-r-- 1 biju biju 0 Jun 8 12:37 D2file2
+-rw-rw-r-- 1 biju biju 0 Jun 8 12:37 D2file3
+After locking
+total 0
+-rw------- 1 biju biju 0 Jun 8 12:37 D2file1
+-rw------- 1 biju biju 0 Jun 8 12:37 D2file2
+-rw------- 1 biju biju 0 Jun 8 12:37 D2file3
 
 comments
 
 #!/bin/bash
 
-read -p "Enter the number :" num
-
-if [ $num -ge 2 -a $num -le `echo "2 * 2 * 2 * 2 * 2" | bc` ]
+if [ $# -eq 0 ] #no cla given
 then
-    for row in $(seq 1 $num)
-    do
-        displayNumber=1
-        for col in $(seq 1 $row)        
-        do
-            echo -n "$displayNumber "
-            ((displayNumber=displayNumber + 1))
-        done
-        echo
-    done
-else
-    echo "Error : Number out of range, Please enter 2 < number < 2^5"
+    echo "Error : Please pass the directory in command line"
+elif [ $# -eq 1 ]
+then
+    if [ -d $1 ]
+    then
+        echo "Before locking"
+        ls -l #display all fils and the permissions
+
+
+        chmod -R g-rwx $1 #remove r w x access to g (all files of $1 dir )
+        chmod -R o-rwx $1 #remove r w x access to o
+
+        echo "After locking"
+        ls -l #display all files and permission
+    else
+        echo "please enter valid directory name"
+    fi
+else #more than one cla given
+    echo "enter only one cla and make sure its valid directory path else its going to be error again!"
 fi
