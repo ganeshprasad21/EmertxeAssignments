@@ -76,3 +76,6 @@ then
 else #more than one command line argument is given
     echo "please send only one argument to the script"
 fi
+
+
+
