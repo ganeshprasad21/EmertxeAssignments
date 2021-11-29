@@ -15,7 +15,7 @@ comments
 
 #!/bin/bash
 
-function arithmaticOperation()
+function arithmaticOperation()   #to perform arithmatic operation accordingly
 {
     case $2 in
 
@@ -39,23 +39,23 @@ function arithmaticOperation()
 }
 
 
-if [ $# -eq 1 ]
+if [ $# -eq 1 ] #if 1 cla is given
     then
     num=$1
-    if [[ $num =~ ^[0-9]+[+-/x]$ ]]
+    if [[ $num =~ ^[0-9]+[+-/x]$ ]] #if num is valid
     then
 
-        endIndex=`echo " ${#num} - 2 " | bc`
+        endIndex=`echo " ${#num} - 2 " | bc` #get index upto which loop should run
         answer=${num[@]:0:1}
         operation=${num[@]:(( ${#num} - 1 )):1}
 
         for i in `seq 1 $endIndex`
         do
-            numToFunc=${num[@]:$i:1}
+            numToFunc=${num[@]:$i:1} #take one number and add it in loop
             answer=`arithmaticOperation $answer $operation $numToFunc`
         done
 
-        if [ $operation = "+" ]
+        if [ $operation = "+" ]    #catches display logic
         then
             echo "Sum is $answer"
         elif [ $operation = "/" ]
@@ -68,11 +68,11 @@ if [ $# -eq 1 ]
         then
             echo "Mul is $answer"
         fi
-    else
+    else #invalid cla
         echo "Error: Operator missing or invalid operator, please pass"
         echo "operator as last digit (+,-,x,/)"
     fi
-else
+else #0 arguments passed
     echo "Error : Please pass the argument."
     echo "Usage : ./09_operator_dependent.sh 2345+"
 fi
